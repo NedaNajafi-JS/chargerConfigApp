@@ -1,0 +1,602 @@
+<!--Webtools settings form-->
+<!DOCTYPE html>
+<html >
+    <head>
+        <style>
+        .border {
+          padding-left: 20px;
+          border-style: groove;
+        }
+        .table{
+            margin-left: -543px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+        .dev{
+            margin-left: -1px;
+        }
+        </style>
+        </head>
+<body>
+    <h1>Over View</h1>
+    <div class=border>
+        <p>•  Type: AC EV CHARGER TYPE 2, 7.4KW </p>
+        <p>•  Serial No: MB12 </p>
+        <p>•  Manufacture address: Mapna </p>
+        <p>•  Time : 2020-07-12  11:20PM </p>
+        <p>•  Software version </p>
+        <p>•  Frame ware version </p>
+        <p>•  server  connectivity </p>
+        <p>•  Language    </p>
+        <p>•  Self check  status </p>
+    </div>
+
+    <h1>System Configuration</h1>
+    <div class=border>
+        <table>
+            <tr>
+                <td>
+                    <form action="/setting/reset" method="GET">
+                        <input type="submit" name=reset value="Reset">
+                    </form>
+                </td>
+                <td>
+                    <form action="/setting/checkserver" method="post">
+                        <input type="submit"  name=check_server value="Check server">
+                    </form>
+                </td>
+                <td>
+                    <form action="/setting/selfcheck" method="post">
+                        <input type="submit"  name=self_check value="Self Check">
+                    </form>
+                </td>
+            </tr>
+            <form action="/setting/report" method="post">
+                <tr>
+                    <td>
+                        <input type="submit"  name=report value="Report">
+                    </td>
+                    <td>Date from:</td>
+                    <td>
+                        <input type="date"  name=date_from value="">
+                    </td>
+                    <td>to:</td>
+                    <td>
+                        <input type="date"  name=date_to value="">
+                    </td>
+                </tr>
+            </form>
+            <form action="/setting/changeuserpass/2" method="post">
+                <input type="hidden" id="id" name="id" value="1">
+                <tr>
+                    <td>•	Change username and password </td>
+                    <td>username:</td>
+                    <td>
+                        <input type="text"  name=username value="">
+                    </td>
+                    <td>password:</td>
+                    <td>
+                        <input type="text"  name=password value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="change">
+                    </td>
+                </tr>
+            </form>
+            <form action="/setting/setdatetime" method="post">
+                <input type="hidden" id="id" name="id" value="2">
+                <tr>
+                    <td>•	Date and Time</td>
+                    <td>
+                        <input type="date" name=date_time value="">
+                    </td>
+                    <td>
+                        <input type="submit"  value="Set time">
+                    </td>
+                </tr>
+            </form>
+            <form action="/setting/qr/register" id="qr_form" method="post">
+                <input type="hidden" id="id" name="setting_id" value="2">
+                <tr>
+                    <td>•	Authentication type</td>
+                    <td>
+                        <input type="radio" id="qr" name="authen_type" value="qr" onclick=changedisabled()>
+                        <label for="qr">QR</label>
+                    </td>
+                    <td>
+                        <input type="radio" id="rfid" name="authen_type" value="rfid" onclick=changeEnable()>
+                        <label for="rfid">RFID</label>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit"  id="qr_submit" value="Register" hidden="true" >
+                    </td>
+                </tr>
+            </form>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Name:</td>
+                <td>
+                    <input type="text" id="rfid_name" name="rfid_name" disabled>
+                </td>
+                <td>ID:</td>
+                <td>
+                    <input type="text" id="rfid_id" name="rfid_id" disabled>
+                </td>
+                <td>
+                    <input  type="button" id="btn_read" onclick="ReadId()" value="Read" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <input  type="button"  id="btnGenerate" onclick="createtable()" value="ADD" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                <div id="rfid_div">
+                </div>
+                <div id="reg_div" class=dev>
+                </div>
+            </td>
+            </tr>
+        </table>
+    </div>
+
+    <h1>Network Setting</h1>
+    <div class=border>
+        <table>
+            <form action="/setting/netsetting" method="post">
+                <input type="hidden" id="id" name="id" value="5">
+                <tr>
+                    <td>
+                        <input type="radio" id="wifi" name="net_type" onclick="Functionenable()" value="wifi">
+                        <label for="wifi"> Wifi</label><br>
+                    </td>
+                    <td>
+                        <input type="radio" id="server" name="wifi_" value="server" disabled="true">
+                        <label for="server">Server</label>
+                    </td>
+                    <td>Setting-></td>
+                    <td>SSID:</td>
+                    <td>
+                        <input list="ssid_list" id="ssid" name="ssid" disabled="true">
+                        <datalist id="ssid_list" >
+                        </datalist>
+                    </td>
+                    <td>Password:</td>
+                    <td>
+                        <input type="text" id="paaaword" name="password" disabled="true">
+                    </td>
+                    <td>
+                        <input type="submit"  id="ok_check" value="OK" disabled="true">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="radio" id="client" name="wifi_" value="client" disabled="true">
+                        <label for="client">Client</label>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="button"  id="ssid_button" value="View SSIDs" onclick="Viewssid()" disabled="true">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="radio" id="gsm" name="net_type" onclick="Functiondisabled()" value="gsm">
+                        <label for="gsm"> GSM</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="radio" id="lan" name="net_type" onclick="Functiondisabled()" value="lan">
+                        <label for="lan"> LAN</label><br>
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+
+    <h1>Charging value setting</h1>
+    <div class=border>
+        <table>
+            <form action="/setting/charghing_sett/0" method="post">
+                <input type="hidden" id="id" name="id" value="6">
+                <tr>
+                    <td>Max Current:</td>
+                    <td>
+                        <input type="text" name="max_current"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Max Voltage:</td>
+                    <td>
+                        <input type="text" name="max_voltage"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cost/Kwh:</td>
+                    <td>
+                        <input type="text" name="cost_kwh"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit"  value="Save"/>
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+
+    <h1>Ocpp</h1>
+    <div class=border>
+        <table>
+            <form action="/setting/ocpp/2" method="post">
+                <input type="hidden" id="id" name="id" value="7">
+                <tr>
+                    <td>Center system address:</td>
+                    <td>
+                        <input type="text" name="center_system_add"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Charging point Address:</td>
+                    <td>
+                        <input type="text" name="charging_point_add"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Charge point port:</td>
+                    <td>
+                        <input type="text" name="charging_point_port"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit"  value="Save"/>
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+<script type="text/javascript">
+/**
+ * @summary Change of server, client,SSID and password enable
+ */
+function Functionenable() {
+    document.getElementById("server").disabled = false;
+    document.getElementById("ssid").disabled = false;
+    document.getElementById("paaaword").disabled = false;
+    document.getElementById("client").disabled = false;
+    document.getElementById("server").disabled = false;
+    document.getElementById("ssid_button").disabled = false;
+    document.getElementById("ok_check").disabled = false;
+    
+}
+/**
+ * @summary Change of server, client,SSID and password enable
+ */
+function Viewssid(){
+    var xhttp = new XMLHttpRequest();
+    var ssid = new Array();
+    
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var str='';
+            //document.getElementById("demo").innerHTML =
+            ssid = JSON.parse(this.responseText);
+            let ssids = ssid.ssids;
+
+            for (var i=0; i < ssids.length;++i){
+                str += '<option value="'+ssids[i]+'" />'; // Storing options in variable
+            }
+            
+            var my_list=document.getElementById("ssid_list");
+            my_list.innerHTML = str;
+        }
+    };
+    xhttp.open("POST", "setting/getwifi", true);
+    xhttp.send();
+     // variable to store the options
+    /*var ssid = new Array();
+    ssid.push("exp");
+    ssid.push("MECO-WLAN");
+    ssid.push("MECO-Guest");
+    ssid.push("ChargerAP");*/
+}
+/**
+ * @summary Change of server, client,SSID and password disabled
+ */
+function Functiondisabled(){
+    document.getElementById("server").disabled = true;
+    document.getElementById("ssid").disabled = true;
+    document.getElementById("paaaword").disabled = true;
+    document.getElementById("client").disabled = true;
+    document.getElementById("server").disabled = true;
+    document.getElementById("ssid_button").disabled = true;
+    document.getElementById("ok_check").disabled = true;
+}
+/**
+ * @summary Read RFID from server with ajax and set in rfid_id
+ */
+function ReadId(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML =
+        this.responseText;
+        }
+    };
+    xhttp.open("POST", "setting/getrfid", true);
+    xhttp.send();
+}
+/**
+ * @summary Change of user name, user id,READ and ADD disabled, Empty RFID information
+ */
+function changedisabled()
+{
+    document.getElementById("rfid_name").disabled = true;
+    document.getElementById("rfid_name").value="";
+    document.getElementById("rfid_id").disabled = true;
+    document.getElementById("rfid_id").value = "";
+    document.getElementById("btn_read").disabled = true;
+    document.getElementById("btnGenerate").disabled = true;
+    document.getElementById("qr_submit").hidden = false;
+    
+    var empTab = document.getElementById('rfid_table');
+    if(empTab!=null)
+    {
+       // document.getElementById("rfid_table").innerHTML="";
+        document.getElementById("rfid_table").hidden=true;
+        document.getElementById("rfid_div").innerHTML="";
+        document.getElementById("reg_div").innerHTML="";
+    }
+}
+/**
+ * @summary Change of user name, user id,READ and ADD enable
+ */
+function changeEnable()
+{
+    document.getElementById("rfid_name").disabled = false;
+    document.getElementById("rfid_id").disabled = false;
+    document.getElementById("btn_read").disabled = false;
+    document.getElementById("btnGenerate").disabled = false;
+    document.getElementById("qr_submit").hidden = true;
+}
+/**
+ * @summary Create tables and enter RFID information dynamically
+ * @returns error Empty information,Duplicate information
+ */
+function createtable() {
+    debugger;
+    var customers = new Array();
+    customers.push(["Name", "ID"]);
+    var rfid_name=document.getElementById("rfid_name").value;
+    if(rfid_name == "undefined" || rfid_name == null || rfid_name == "" || rfid_name == '' || rfid_name.length <= 0)
+    {
+        alert("نام نمی تواند خالی باشد")
+        return;
+    }
+    var rfid_id=document.getElementById("rfid_id").value;
+    if(rfid_id == "undefined" || rfid_id == null || rfid_id == "" || rfid_id == '' || rfid_id.length <= 0)
+    {
+        alert(" شناسه نمی تواند خالی باشد")
+        return;
+    }
+    var div = document.getElementById("rfid_div");
+    var tb=document.getElementById("rfid_table");
+    if(tb==null)
+    {
+        var data = new Array();
+        var form =document.createElement("form");
+        form.setAttribute('action','/setting/rfid/registerUsers');
+        form.setAttribute('method','post');
+        form.setAttribute('id','rfid_form');
+        var table =document.createElement("table");
+        table.setAttribute('id','rfid_table');
+        table.setAttribute('class','table');
+        var tblBody = document.createElement("tbody");
+        tblBody.setAttribute('id','rfid_tblBody');
+        var input_hidden =document.createElement("input");
+        input_hidden.setAttribute('id','rfid_input');
+        input_hidden.setAttribute('type','hidden');
+        input_hidden.setAttribute('name','users');
+        var input_hid =document.createElement("input");
+        input_hid.vakue=0;
+        input_hid.setAttribute('type','hidden');
+        input_hid.setAttribute('name','setting_id');
+    }
+    else
+    {
+        var count =  document.getElementById("rfid_table").rows.length;
+        var check_item="";
+        if(count>0)
+        {
+            for(var i=0; i <count; i++)
+            {
+                for(var j=0; j <2; j++)
+                {
+                    if(j==0)
+                        check_item=rfid_name;
+                    else
+                        check_item=rfid_id;
+                    var info=document.getElementById("rfid_table").rows[i].cells[j].getElementsByTagName('input')[0].value;
+                    if(check_item==info)
+                    {
+                        alert("اطلاعات تکراری است،لطفا مجدد بررسی نمایید")
+                        return;
+                    }
+                }
+            }
+        }
+        var form =document.getElementById("rfid_form");
+        var table =document.getElementById("rfid_table");
+        var tblBody = document.getElementById("rfid_tblBody");
+        var input_hidden =document.getElementById("rfid_input");
+        var data =JSON.parse(input_hidden.value);
+    }
+    customers.push([rfid_name, rfid_id]);
+    var user_={"id":rfid_id,"name":rfid_name,"block":0}
+    data.push(user_);
+    input_hidden.value=JSON.stringify(data);
+    var row = document.createElement("tr");
+    var columnCount = 2;
+    for (var j = 0; j < columnCount; j++) {
+        var cell = document.createElement("td");
+        
+        var input = document.createElement("input");
+        input.setAttribute('type', 'text');
+        input.value = customers[1][j];
+        if(j!=0)
+            input.disabled = true;
+        else
+            input.disabled = false;
+        cell.appendChild(input);
+        row.appendChild(cell);
+        row.style.border =  '1px solid black';
+    }
+    var cell = document.createElement("td");
+    var input_btn = document.createElement("input");
+    input_btn.setAttribute('type', 'button');
+    input_btn.setAttribute('value', 'Delete');
+    input_btn.setAttribute('onclick', 'removeRow(this)');
+    cell.appendChild(input_btn);
+    row.appendChild(cell);
+    var cell = document.createElement("td");
+    var input_block = document.createElement("input");
+    input_block.setAttribute('type', 'button');
+    input_block.setAttribute('value', 'Block');
+    input_block.setAttribute('onclick', 'blockRow(this)');
+    cell.appendChild(input_block);
+    row.appendChild(cell);
+    tblBody.appendChild(row);
+    table.appendChild(tblBody);
+    form.appendChild(table);
+    form.appendChild(input_hidden);
+    if(input_hid!=null)
+        form.appendChild(input_hid);
+    div.appendChild(form);
+    document.getElementById("rfid_table").hidden=false;
+    createRegister();
+}
+/**
+ * Delete table row
+ */
+function removeRow(id){
+    debugger;
+   var empTab = document.getElementById('rfid_table');
+   if(empTab!=null)
+   {
+        empTab.deleteRow(id.parentNode.parentNode.rowIndex); 
+
+        var count =  empTab.rows.length;
+        if(count<=0)
+        {
+            document.getElementById("rfid_table").hidden=true;
+            document.getElementById("reg_div").innerHTML="";
+        }
+    }
+}
+/**
+ * Block and unBlock table row
+ */
+function blockRow(id){
+    debugger;
+   var empTab = document.getElementById('rfid_table');
+   var row_index=id.parentNode.parentNode.rowIndex;
+   var block=empTab.rows[row_index].cells[3].getElementsByTagName('input')[0].value;
+   if(block=="Block")
+   {
+        var input_hidden =document.getElementById("rfid_input").value;
+        var value=JSON.parse(input_hidden);
+        value[row_index].block=1;
+        document.getElementById("rfid_input").value=JSON.stringify(value);
+        empTab.rows[row_index].cells[0].getElementsByTagName('input')[0].disabled=true;
+        empTab.rows[row_index].cells[3].getElementsByTagName('input')[0].value="unBlock";
+   }
+   else if (block=="unBlock")
+   {
+        var input_hidden =document.getElementById("rfid_input").value;
+        var value=JSON.parse(input_hidden);
+        value[row_index].block=0;
+        document.getElementById("rfid_input").value=JSON.stringify(value);
+        empTab.rows[row_index].cells[0].getElementsByTagName('input')[0].disabled=false;
+        empTab.rows[row_index].cells[3].getElementsByTagName('input')[0].value="Block";
+   }
+}
+/**
+ * Create registration button
+ */
+function createRegister() {
+    document.getElementById("reg_div").innerHTML="";
+    
+    debugger;
+    var div = document.getElementById("reg_div");
+    var table =document.createElement("reg_table");
+    var tblBody = document.createElement("tbody");
+    var row_reg = document.createElement("tr");
+    var cell_reg = document.createElement("td");
+    var input_reg = document.createElement("input");
+    input_reg.setAttribute('type', 'submit');
+    input_reg.setAttribute('value', 'Register');
+    input_reg.setAttribute('onclick', 'formsubmit(this)');
+    cell_reg.appendChild(input_reg);
+    row_reg.appendChild(cell_reg);
+    tblBody.appendChild(row_reg);
+    table.appendChild(tblBody);
+    div.appendChild(table);
+}
+/**
+ * Submit a form for save RFID information
+ */
+function formsubmit(id){
+    debugger;
+    document.getElementById("rfid_form").submit();
+}
+/**
+ * Load
+ */
+ function Load(){
+    debugger;
+    const data = require('../data');
+    console.log(data);
+}
+</script>
+</body>
+</html>
+
+

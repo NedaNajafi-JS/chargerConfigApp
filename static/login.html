@@ -1,0 +1,52 @@
+<!--Webtools login form-->
+<!DOCTYPE html>
+<html >
+    <head>
+        <style>
+        .border {
+          padding-left: 20px;
+          border-style: groove;
+        }
+        </style>
+        </head>
+<body>
+    <script type="text/javascript" src="login.js"></script>
+        <div class="vertical-center">
+            <div>
+                <img src= './img/logo.jpg'>
+            </div>
+        </div>
+        <div class="vertical-center">
+            <div>
+            <!-- <form action="/user/login" method="post" > -->
+                <label for="username" class="lbl">شناسه کاربری</label>
+                <input type="text" name="username" id="username">
+                <br>
+                <br>
+                <label for="password" class="lbl">رمز عبور</label>
+                <input type="password" name="password" id="password">
+                <br>
+                <br>
+                <!-- <button type="submit">ورود</button> -->
+                <input type="button"  id="report_button" value="login" onclick="login()">
+            <!-- </form> -->
+        </div>
+        </div>
+    
+    <style>
+        
+        .vertical-center {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+         <!-- height:100vh;-->
+          text-align: right;
+          direction: rtl;
+        }
+        .lbl{
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</body>
+</html>

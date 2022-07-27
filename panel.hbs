@@ -1,0 +1,431 @@
+<!--Webtools settings form-->
+<!DOCTYPE html>
+<html >
+    <head>
+        <style>
+            .table_, .th, .td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+        .border {
+          padding-left: 20px;
+          border-style: groove;
+        }
+        .table{
+            margin-left: -543px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+        .dev{
+            margin-left: -1px;
+        }
+        </style>
+    </head>
+<body onLoad="Load()">
+    <script type="text/javascript" src="panel.js"></script>
+    <link rel="stylesheet" href="persian-datepicker.css"/>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="persian-date.js"></script>
+    <script type="text/javascript" src="persian-datepicker.js"></script>
+
+    <h1>Overview</h1>
+    <div class=border>
+        <p>•  Type: AC EV CHARGER TYPE 2, 7.4KW </p>
+        <p>•  Serial No: MB12 </p>
+        <p>•  Manufacture address: Mapna </p>
+        <p>•  Time : 2020-07-12  11:20PM </p>
+        <p>•  Software version </p>
+        <p>•  Firmware version </p>
+        <p>•  server  connectivity </p>
+        <p>•  Language: English</p>
+        <p>•  Self check  status </p>
+    </div>
+
+    <h1>System Configuration</h1>
+    <div class=border>
+        <table>
+            <tr>
+                <td>
+                    <form action="/setting/reset" method="GET">
+                        <input type="submit" name=reset value="Reset">
+                    </form>
+                </td>
+                <td>
+                    <input type="button"  id="check_server" value="Check server" onclick="checkServer()">
+                </td>
+                <td>
+                    <form action="/setting/selfcheck" method="post">
+                        <input type="submit"  name=self_check value="Self Check">
+                    </form>
+                </td>
+            </tr>
+            {{!----------------------------------- End -----------------------------------}}
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+                <tr>
+                    <td>•	Get report </td>
+                    <td></td>
+                    <td>
+                        <label for="date_from">Date from:</label>
+                        <input type="text"  name=date_from id="date_from">
+                        <input type="hidden" id="date_from_hide">
+                    </td>
+                    <td>
+                        <label for="date_to">to:</label>
+                        <input type="text"  name=date_to id="date_to">
+                        <input type="hidden" id="date_to_hide">
+                    </td>
+                    <td>
+                        <input type="button"  id="report_button" value="Report" onclick="getReport()">
+                    </td>
+                </tr>
+            {{!----------------------------------- End -----------------------------------}}
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                {{!-- <tr>
+                    <td></td>
+                    <td>
+                        <table class="table_" id="table_">
+                            <thead>
+                                <tr>
+                                <th class="th">id</th>
+                                <th class="th">user</th>
+                                <th class="th">total_cost</th>
+                                <th class="th">total_energy</th>
+                                <th class="th">date</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </td>
+                </tr> --}}
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <input type="hidden" id="id" name="id" value={{setting_id}}>
+                <tr>
+                    <td>•	Change username/password </td>
+                    <td></td>
+                    <td>
+                        <label for="username">username:</label>
+                        <input type="text"  name=username id="username" value="">
+                    </td>
+                    <td>
+                        <label for="password">password:</label>
+                        <input type="password"  name=password id="password_setting" value="">
+                    </td>
+                    <td>
+                        <input type="button"  id="set_time" value="change" onclick="changeUserNamePassword()">
+                    </td>
+                </tr>
+            {{!----------------------------------- End -----------------------------------}}
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+                <input type="hidden" id="id" name="id" value={{setting_id}}>
+                <tr>
+                    <td>•	Date and Time</td>
+                    <td></td>
+                    <td>
+                        <input type="date" name=date_time id="date_time" value={{current_date}}>
+                        <input type="time" name=time id="time" value={{curent_time}}>
+                    </td>
+                    <td>
+                        <input type="button"  id="set_time" value="Set date and time" onclick="setTime()">
+                    </td>
+                </tr>
+            {{!----------------------------------- End -----------------------------------}}
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <form action="/setting/qr/register" id="qr_form" method="post">
+                <input type="hidden" id="id" name="id" value={{setting_id}}>
+                <tr>
+                    <td>•	Authentication type</td>
+                    <td>
+                        <input type="radio" id="qr" name="authen_type" value="qr" {{check_qr}} onclick=changedisabled()>
+                        <label for="qr">QR</label>
+                    </td>
+                    <td>
+                        <input type="radio" id="rfid" name="authen_type" value="rfid" {{check_rfid}} onclick=changeEnable()>
+                        <label for="rfid">RFID</label>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit"  id="qr_submit" value="Register" hidden="true" >
+                    </td>
+                </tr>
+            </form>
+            <tr>
+                <td></td>
+                <td>
+                    <label for="rfid_name">Name:</label>
+                    <input type="text" id="rfid_name" name="rfid_name"  {{disable}}>
+                </td>
+                <td>
+                    <label for="rfid_id">ID:</label>
+                    <input type="text" id="rfid_id" name="rfid_id" disabled>
+                </td>
+                <td>
+                    <input  type="button" id="btn_read" onclick="ReadId()" value="Read" {{disable}}>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <input  type="button"  id="btnGenerate" onclick="createtable()" value="ADD" {{disable}}>
+                </td>
+            </tr>
+            <tr>
+                {{!-- <td></td> --}}
+                {{!-- <td></td> --}}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                <div id="rfid_div">
+                </div>
+                <div id="reg_div" class=dev>
+                </div>
+            </td>
+            </tr>
+        </table>
+    </div>
+
+    <h1>Network Setting</h1>
+    <div class=border>
+        <table>
+            <form action="/setting/netsetting" method="post">
+                <input type="hidden" id="id" name="id" value={{setting_id}}>
+                <tr>
+                    <td>
+                        <input type="radio" id="wifi" name="net_type" {{check_wifi}} onclick="Functionenable()" value="wifi">
+                        <label for="wifi"> Wifi</label><br>
+                    </td>
+                    <td>
+                        <input type="radio" id="server" name="wifi_" value="server" {{check_server}} onclick="FunctionenableServer()" {{opmode_disable}}>
+                        <label for="server">Server</label>
+                    </td>
+                    <td></td>
+                    <td>Setting:</td>
+                    <td></td>
+                    <td>
+                        <label for="ssid">SSID:</label>
+                        <input list="ssid_list" id="ssid" name="ssid" {{connection_disable}}>
+                        <datalist id="ssid_list" >
+                        </datalist>
+                    </td>
+                    <td>
+                        <label for="password">Password:</label>
+                        <input type="text" id="password" name="password" {{connection_disable}}>
+                    </td>
+                    <td>
+                        <input type="button"  id="config_check" value="Config SSID" onclick="Configssid()" {{button_disable}}>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="radio" id="client" name="wifi_" value="client" {{check_client}} onclick="FunctiondisableServer()" {{opmode_disable}}>
+                        <label for="client">Client</label>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="button"  id="ssid_button" value="View SSIDs" onclick="Viewssid()" {{button_disable}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="radio" id="gsm" name="net_type" {{check_gsm}} onclick="Functiondisabled()" value="gsm">
+                        <label for="gsm"> GSM</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="radio" id="lan" name="net_type" {{check_lan}} onclick="Functiondisabled()" value="lan">
+                        <label for="lan"> LAN</label><br>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit"  id="net_setting_save" value="Save" >
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+
+    <h1>Charging value setting</h1>
+    <div class=border>
+        <table>
+            <form action="/setting/charghing_sett/" method="post">
+                <input type="hidden" id="id" name="id" value={{setting_id}}>
+                <tr>
+                    <td>Max Current:</td>
+                    <td>
+                        <input type="text" name="max_current" value={{max_current}}>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Max Voltage:</td>
+                    <td>
+                        <input type="text" name="max_voltage" value={{max_voltage}}>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cost/Kwh:</td>
+                    <td>
+                        <input type="text" name="cost_kwh" value={{cost_kwh}}>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit"  value="Save"/>
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+
+    <h1>Ocpp</h1>
+    <div class=border>
+        <table>
+            <form action="/setting/ocpp" method="post">
+                <input type="hidden" id="id" name="id" value={{setting_id}}>
+                <tr>
+                    <td>Center system address:</td>
+                    <td>
+                        <input type="text" name="center_system_add" value='{{center_system}}'>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Charging point Address:</td>
+                    <td>
+                        <input type="text" name="charging_point_add"  value='{{charging_p_add}}'>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Charge point port:</td>
+                    <td>
+                        <input type="text" name="charging_point_port" value='{{charging_p_port}}'>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input type="submit"  value="Save"/>
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#date_from").pDatepicker({
+        onSelect: function(unix){
+            $('#date_from_hide').val(unix);
+            console.log('datepicker select : ' + unix);
+        },
+        altField :'#date_from_hide',
+        autoClose: true,
+        format: 'YYYY/MM/DD HH:mm',
+        timePicker: {
+            enabled: true,
+            meridiem: {
+                enabled: true
+            }
+        }
+    });
+    //---
+    $("#date_to").pDatepicker({
+        onSelect: function(unix){
+            $('#date_to_hide').val(unix);
+            console.log('datepicker select : ' + unix);
+        },
+        altField :'#date_to_hide',
+        autoClose: true,
+        format: 'YYYY/MM/DD HH:mm',
+        timePicker: {
+            enabled: true,
+            meridiem: {
+                enabled: true
+            }
+        }
+    });
+    //---
+  });
+</script> 
+</body>
+</html>
+
+
